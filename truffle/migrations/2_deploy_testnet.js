@@ -5,10 +5,11 @@ const Bridge                            = artifacts.require('Bridge');
 
 module.exports = async (deployer, network, accounts) => {
 
-  
+  let _network  = null;
   if (network === 'rinkeby') {_network = 'network1'; }  
   if (network === 'bsctestnet') {_network = 'network2'; }  
 
+if(network === 'rinkeby' || network === 'bsctestnet'){
      try {
 
 
@@ -32,6 +33,6 @@ module.exports = async (deployer, network, accounts) => {
             } catch (err) {
               console.error(err)
             }
-  
+  }
     
 }
