@@ -20,6 +20,7 @@
     "@chainlink/contracts": "^0.0.11",
     "@openzeppelin/contracts": "^4.0.0",
     "@truffle/hdwallet-provider": "^1.2.0",
+    "@uniswap/lib": "^4.0.1-alpha",
     "dotenv": "^8.2.0"
   },
   "devDependencies": {
