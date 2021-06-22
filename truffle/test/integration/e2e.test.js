@@ -56,12 +56,9 @@ contract('Brigde', (deployer, accounts) => {
     this.mp3 = null;
     this.chainIdNetwork1 = argv.typenet === 'teststand' ? await brigdePart1.web3.eth.net.getId() : 1111;
     this.chainIdNetwork2 = argv.typenet === 'teststand' ? await brigdePart2.web3.eth.net.getId() : 1112;
-    if (argv.typenet === 'teststand' ||
-
-        (argv.typenet === 'devstand'
-        && envNet1.parsed.DEXPOOL_NETWORK1 == undefined 
-        && envNet2.parsed.DEXPOOL_NETWORK2 == undefined)
-        // && envNet3.parsed.DEXPOOL_NETWORK3 == undefined)
+    
+    if (envNet1.parsed.DEXPOOL_NETWORK1 == undefined  && envNet2.parsed.DEXPOOL_NETWORK2 == undefined
+        // && envNet3.parsed.DEXPOOL_NETWORK3 == undefined
     ) {
 
       this.mp1 = await mockPool1.new(this.br1.address, {from: this.userNet1});
