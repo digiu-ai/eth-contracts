@@ -5,6 +5,8 @@ const bscws     = 'https://data-seed-prebsc-1-s1.binance.org:8545/';
 // const rinkebyws = 'wss://rinkeby.infura.io/ws/v3/0f4453c71dd145c6b819bbbf60a96e9d';
 const rinkebyws = 'wss://rinkeby.infura.io/ws/v3/ab95bf9f6dd743e6a8526579b76fe358';
 
+const mumbaiws = 'wss://rpc-mumbai.maticvigil.com/ws'
+
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -53,7 +55,13 @@ module.exports = {
        network_id: 4,
        timeoutBlocks: 200,
        skipDryRun: true
-    }
+    },
+
+      mumbai: {
+          provider: () => new HDWalletProvider(process.env.TESTNET_MUMBAI, mumbaiws),
+          network_id: 80001,
+          timeoutBlocks: 200
+      },
 
   },
 
