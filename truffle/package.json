@@ -1,6 +1,6 @@
 {
-  "name": "upgradability",
-  "version": "1.0.0",
+  "name": "smart-contracts",
+  "version": "0.0.1",
   "description": "",
   "main": "truffle-config.js",
   "directories": {
@@ -18,10 +18,11 @@
   "license": "ISC",
   "dependencies": {
     "@chainlink/contracts": "^0.0.11",
-    "@openzeppelin/contracts": "^4.0.0",
     "@truffle/hdwallet-provider": "^1.2.0",
     "@uniswap/lib": "^4.0.1-alpha",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "@opengsn/contracts": "^2.2.2",
+    "@openzeppelin/contracts": "^4.1.0"
   },
   "devDependencies": {
     "@openzeppelin/test-helpers": "^0.5.10",
