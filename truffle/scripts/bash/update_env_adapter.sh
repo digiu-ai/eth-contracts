@@ -1,8 +1,26 @@
 #! /bin/bash
 
-echo "
-BRIDGE_${2:-\"null\"}=${3:-\"null\"}
-NODELIST_${2:-\"null\"}=${5:-\"null\"}
-DEXPOOL_${2:-\"null\"}=${6:-\"null\"}
-PORTAL_${2:-\"null\"}=${7:-\"null\"}
-SYNTHESIS_${2:-\"null\"}=${8:-\"null\"}"  > $4
+MODE=${1}
+FILENAME=${2}
+if [[ "$MODE" =~ ^(create)$ ]]
+then
+ rm ${FILENAME} 2> /dev/null
+fi
+
+i=0
+for pass in "${@:3}"
+do
+    # update or create
+    if [[ "$MODE" =~ ^(create)$ ]]
+    then
+cat << EOF >> ${FILENAME}
+${pass}
+EOF
+     else
+cat << EOF >> ${FILENAME}
+${pass}
+EOF
+    fi
+
+    i=$((i+1))
+done
