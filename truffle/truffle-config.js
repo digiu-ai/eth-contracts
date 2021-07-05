@@ -66,7 +66,7 @@ module.exports = {
   compilers: {
     solc: {
        version: "0.8.0",
-       docker: true,
+       docker: false,
        parser: "solcjs",
        settings: {
         optimizer: {
@@ -75,5 +75,7 @@ module.exports = {
         }
       }
     }
-  }
+  },
+
+  contracts_directory: "./contracts/v0.8"
 };

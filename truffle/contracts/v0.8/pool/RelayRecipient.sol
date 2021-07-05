@@ -1,7 +1,7 @@
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/Context.sol";
+import "@openzeppelin/contracts-newone/access/Ownable.sol";
+import "@openzeppelin/contracts-newone/utils/Context.sol";
 
 abstract contract RelayRecipient is Context, Ownable {
     address private _trustedForwarder;

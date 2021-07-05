@@ -3,7 +3,7 @@ pragma solidity >=0.7.6 <=0.8.0;
 
 import "./core/BridgeCore.sol";
 import "./interface/ListNodeInterface.sol";
-import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
+import "@openzeppelin/contracts-newone/utils/cryptography/ECDSA.sol";
 
 
 //TODO: onlyTrustedNode has worse filled data. I.e. In func NodeList#addNode the golang node registers himself
