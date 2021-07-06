@@ -3,7 +3,9 @@ pragma solidity ^0.7.6;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract TestToken is ERC20("Test Token", "TOK") {
+contract TestToken is ERC20 {
+
+    constructor (string memory  n1, string memory  n2) ERC20(n1,n2)  {}
 
     function mint(address rec, uint amount) public {
         _mint(rec, amount);

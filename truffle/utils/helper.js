@@ -24,7 +24,7 @@ const checkoutProvider = (argv) => {
 
     const web3Net1 = networks[argv.net1].provider();
     const web3Net2 = networks[argv.net2].provider();
-    const web3Net3 = networks[argv.net3].provider();
+    const web3Net3 = argv.net3 === void 0 ? {} : networks[argv.net3].provider();
 
     return {web3Net1, web3Net2, web3Net3};
   }
