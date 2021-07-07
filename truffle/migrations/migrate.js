@@ -26,9 +26,8 @@ async function migrateLocalnetwork(deployer, network, accounts) {
     await bridge.updateDexBind(dexpool.address, true);
 
     let env_file = "env_connect_to_" + network + ".env";
-    console.log("env_file ",env_file)
-
-    exec(`${process.cwd()}/scripts/bash/update_env_adapter.sh 8081 ${network.toUpperCase()} ${bridge.address} ${env_file} ${nodeList.address} ${dexpool.address}`
+    let n = network.toUpperCase();
+    exec(`${process.cwd()}/scripts/bash/update_env_adapter.sh create ${env_file} BRIDGE_${n}=${bridge.address}      NODELIST_${n}=${nodeList.address} DEXPOOL_${n}=${dexpool.address}`
         , {maxBuffer: 1024 * 100000000}, (err, stdout, stderr) => {
         });
 

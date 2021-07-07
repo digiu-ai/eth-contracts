@@ -68,7 +68,7 @@ contract('Simple e2e test', (deployer, accounts) => {
 
    // filling it
    //this.tT1 = await testToken1.new('Token1','TK1', {from: this.owner1});
-   this.tT1 = await testToken1.at('0x6C21245722c9e384ad94871e6e1d3EA317BE836d');
+   this.tT1 = await testToken1.at('0xebae90275638c7e026e826dc7616d3b7611923a2');
               //await this.uni1.pu(this.tT1.address, {from: this.owner1});
    //this.tT2 = await testToken2.new('Token2','TK2', {from: this.owner2});
    this.tT2 = await testToken2.at('0xe665A8b193f03aAC1Ce84656865ABD36B723Bd68');
@@ -84,13 +84,15 @@ contract('Simple e2e test', (deployer, accounts) => {
 
   describe('simple end-to-end test', async () => {
 
-       it('Simple. Without gasless', async () => {
+  it('Simple. Without gasless', async () => {
 		let token_amt = await portal1.web3.utils.toWei('1.2','ether');
 		let chainID   = await portal2.web3.eth.net.getId();
-		//synthesize(address _token, uint256 _amount, address _chain2address, address _receiveSide, address _oppositeBridge, `uint _chainID)
+		console.log(this.tT1.address, token_amt, this.owner2, this.s2.address, this.b2.address, chainID);
                     await this.tT1.approve(this.p1.address, token_amt, {from: this.owner1});
 		let tx1       = await this.p1.synthesize(this.tT1.address, token_amt, this.owner2, this.s2.address, this.b2.address, chainID, {from: this.owner1})
 
+
+            // get balance  this.owner2 (address) 0x2b448e4dfe9573439bd27865486f72863dcf3a9a
        });
 
 
