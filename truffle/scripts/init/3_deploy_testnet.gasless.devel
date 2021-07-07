@@ -1,0 +1,27 @@
+const TokenPaymasterPermitPaymaster = artifacts.require('TokenPaymasterPermitPaymaster');
+const RelayHub                      = artifacts.require('RelayHub');
+
+
+
+
+
+module.exports = async (deployer, network, accounts) => {
+
+  const [owner, anotherAccount] = accounts;
+
+  const relayHub  = network === 'rinkeby' ? '0x6650d69225CA31049DB7Bd210aE4671c0B1ca132' : network === 'bsctestnet' ? '0xAa3E82b4c4093b4bA13Cb5714382C99ADBf750cA' : undefined  // it is real openGSN addresess
+  const forwarder = network === 'rinkeby' ? '0x83A54884bE4657706785D7309cf46B58FE5f6e8a' : network === 'bsctestnet' ? '0xeB230bF62267E94e657b5cbE74bdcea78EB3a5AB' : undefined  // it is real openGSN trustedForwarder
+  const token     = network === 'rinkeby' ? "0x8aAFC440A5057cF8728c1C23fd74C25314c156ac" : network === 'bsctestnet' ? '0x8aAFC440A5057cF8728c1C23fd74C25314c156ac' : undefined;  // token should be in pool (uniswap, pancake and so >
+  const router    = network === 'rinkeby' ? "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D" : network === 'bsctestnet' ? '0x8aAFC440A5057cF8728c1C23fd74C25314c156ac' : undefined;  // pool for certain network (uniswap, pancake and so>
+
+
+                                             await deployer.deploy(TokenPaymasterPermitPaymaster, { from: owner });
+            let paymaster                  = await TokenPaymasterPermitPaymaster.deployed();
+                                             await paymaster.setRelayHub(relayHub);
+                                             await paymaster.setTrustedForwarder(forwarder);
+                                             //await paymaster.addToken(token, uniswap); //TODO more flexible.
+            let relay                      = await RelayHub.at(relayHub);
+//                                             await relay.depositFor(paymaster.address, toWei(2)); // funds paymaster for initial start
+
+
+})

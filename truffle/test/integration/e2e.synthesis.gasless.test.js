@@ -55,23 +55,27 @@ contract('Simple e2e test', (deployer, accounts) => {
     this.owner2 = (await portal2.web3.eth.getAccounts())[0];
 
     /** that's who can invoke bridge */
-    await this.b1.updateDexBind(this.p1.address, true, {from: this.owner1});
-    await this.b1.updateDexBind(this.s1.address, true, {from: this.owner1});
-    await this.b2.updateDexBind(this.p2.address, true, {from: this.owner2});
-    await this.b2.updateDexBind(this.s2.address, true, {from: this.owner2});
+    // await this.b1.updateDexBind(this.p1.address, true, {from: this.owner1});
+    // await this.b1.updateDexBind(this.s1.address, true, {from: this.owner1});
+    // await this.b2.updateDexBind(this.p2.address, true, {from: this.owner2});
+    // await this.b2.updateDexBind(this.s2.address, true, {from: this.owner2});
 
     // create mock uniswap
-    this.uni1 = await testUniswap1.new(2, 1, '0x0000000000000000000000000000000000000000', { value: await portal1.web3.utils.toWei('0.2','ether'), from: this.owner1 });
-    this.uni2 = await testUniswap2.new(2, 1, '0x0000000000000000000000000000000000000000', { value: await portal2.web3.utils.toWei('0.2','ether'), from: this.owner2 });
+    //this.uni1 = await testUniswap1.new(2, 1, '0x0000000000000000000000000000000000000000', { value: await portal1.web3.utils.toWei('0.000000000000002','ether'), from: this.owner1 });
+    this.uni1 = await testUniswap1.at('0xc69bAa9A9A2e6893310ac5fb006FcE40534797fA');
+    //this.uni2 = await testUniswap2.new(2, 1, '0x0000000000000000000000000000000000000000', { value: await portal1.web3.utils.toWei('0.000000000000002','ether'),  from: this.owner2 });
+    this.uni2 = await testUniswap2.at('0x868D9f94DD7Da99DB440cc789dDe6A27Bb0a1c65');
 
    // filling it
-   this.tT1 = await testToken1.new('Token1','TK1', {from: this.owner1});
-              await this.uni1.pu(this.tT1.address, {from: this.owner1});
-   this.tT2 = await testToken2.new('Token2','TK2', {from: this.owner2});
-              await this.uni2.pu(this.tT2.address, {from: this.owner2});
+   //this.tT1 = await testToken1.new('Token1','TK1', {from: this.owner1});
+   this.tT1 = await testToken1.at('0x6C21245722c9e384ad94871e6e1d3EA317BE836d');
+              //await this.uni1.pu(this.tT1.address, {from: this.owner1});
+   //this.tT2 = await testToken2.new('Token2','TK2', {from: this.owner2});
+   this.tT2 = await testToken2.at('0xe665A8b193f03aAC1Ce84656865ABD36B723Bd68');
+              //await this.uni2.pu(this.tT2.address, {from: this.owner2});
     //
-    await this.s2.createRepresentation(this.tT1.address, "sToken1", "sTK1", {from: this.owner2});
-    await this.s1.createRepresentation(this.tT2.address, "sToken2", "sTK2", {from: this.owner1});
+    // await this.s2.createRepresentation(this.tT1.address, "sToken1", "sTK1", {from: this.owner2});
+    // await this.s1.createRepresentation(this.tT2.address, "sToken2", "sTK2", {from: this.owner1});
 
 
 
@@ -80,8 +84,12 @@ contract('Simple e2e test', (deployer, accounts) => {
 
   describe('simple end-to-end test', async () => {
 
-       it.skip('From network 1 to 2 without callback', async () => {
-
+       it('Simple. Without gasless', async () => {
+		let token_amt = await portal1.web3.utils.toWei('1.2','ether');
+		let chainID   = await portal2.web3.eth.net.getId();
+		//synthesize(address _token, uint256 _amount, address _chain2address, address _receiveSide, address _oppositeBridge, `uint _chainID)
+                    await this.tT1.approve(this.p1.address, token_amt, {from: this.owner1});
+		let tx1       = await this.p1.synthesize(this.tT1.address, token_amt, this.owner2, this.s2.address, this.b2.address, chainID, {from: this.owner1})
 
        });
 
