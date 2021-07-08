@@ -14,12 +14,14 @@ const RelayHub                          = artifacts.require('RelayHub');
 
 module.exports = async (deployer, network, accounts) => {
 
+  if (network == "test") return; // test maintains own contracts
   let _network  = null;
   if (network === 'rinkeby')     _network = 'network1';
   if (network === 'bsctestnet')  _network = 'network2';
+  if (network === 'mumbai')      _network = 'network3';
 
 
-if(network === 'rinkeby' || network === 'bsctestnet'){
+//if(network === 'rinkeby' || network === 'bsctestnet'){
      try {
 
           const [owner, anotherAccount] = accounts;
@@ -30,18 +32,17 @@ if(network === 'rinkeby' || network === 'bsctestnet'){
 		  const token     = network === 'rinkeby' ? "0x8aAFC440A5057cF8728c1C23fd74C25314c156ac" : network === 'bsctestnet' ? '0x8aAFC440A5057cF8728c1C23fd74C25314c156ac' : undefined;  // token should be in pool (uniswap, pancake and so >
 		  const router    = network === 'rinkeby' ? "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D" : network === 'bsctestnet' ? '0x8aAFC440A5057cF8728c1C23fd74C25314c156ac' : undefined;  // pool for certain network (uniswap, pancake and so>
 
-		if(network !== 'network1' && network !== 'network2' && argv.paymastergsn === void 0){
+		// the gsn  only for testnet
+		if(!network.includes('network') && argv.paymastergsn === void 0){
 
 		                                             await deployer.deploy(TokenPaymasterPermitPaymaster, { from: owner });
 		            this.paymaster                 = await TokenPaymasterPermitPaymaster.deployed();
 		                                             await this.paymaster.setRelayHub(relayHub);
 		                                             await this.paymaster.setTrustedForwarder(forwarder);
-		                                             //await paymaster.addToken(token, uniswap); //TODO more flexible.
 		            this.relay                     = await RelayHub.at(relayHub);
-		                                             //await relay.depositFor(paymaster.address, toWei(2)); // funds paymaster for initial start
 		}
 
-		this.paymaster = this.paymaster  === void 0 ? await TokenPaymasterPermitPaymaster.at(argv.paymastergsn) : this.paymaster;
+		this.paymaster = (this.paymaster  === void 0 && !network.includes('network')) ? await TokenPaymasterPermitPaymaster.at(argv.paymastergsn) : this.paymaster;
 
           if(argv.bridge === undefined){
 
@@ -63,13 +64,12 @@ if(network === 'rinkeby' || network === 'bsctestnet'){
 
                                         await deployer.deploy(Portal, this.bridge.address, forwarder, { from: owner });
               let portal              = await Portal.deployed();
-                                        //await this.bridge.updateDexBind(portal.address, true, {from: owner});
+  //                                      await this.bridge.updateDexBind(portal.address, true, {from: owner});
 
                                         await deployer.deploy(Synthesis, this.bridge.address, forwarder, { from: owner });
               let synthesis           = await Synthesis.deployed();
-                                        //await this.bridge.updateDexBind(synthesis.address, true, {from: owner});
+//                                        await this.bridge.updateDexBind(synthesis.address, true, {from: owner});
 
-					//await synthesis.createRepresentation(realALP888, "sALP888", "sALP888")
 
 
               let env_file = `env_connect_to_${_network}.env`;
@@ -84,5 +84,5 @@ if(network === 'rinkeby' || network === 'bsctestnet'){
             } catch (err) {
               console.error(err)
             }
-  }
+//  }
 }

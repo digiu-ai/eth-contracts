@@ -18,12 +18,6 @@ module.exports = {
 
   networks: {
 
-    // development: {
-    //  host: "127.0.0.1",
-    //  port: 7545,
-    //  network_id: "1337",
-    // },
-
     network1: {
      host: "172.20.128.11",
      port: 7545,
@@ -36,12 +30,11 @@ module.exports = {
      network_id: "1112",
     },
 
-      network3: {
+    network3: {
           host: "172.20.128.13",
           port: 9545,
           network_id: "1113",
-      },
-
+    },
 
     bsctestnet: {
        provider: () => new HDWalletProvider(process.env.TESTNET_BSC, bscws),
@@ -53,6 +46,11 @@ module.exports = {
        network_id: 4,
        timeoutBlocks: 200,
        skipDryRun: true
+    },
+    mumbai: {
+         provider: () => new HDWalletProvider(process.env.TESTNET_MUMBAI, mumbaiws),
+         network_id: 80001,
+         timeoutBlocks: 200
     }
 
   },
